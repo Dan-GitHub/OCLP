@@ -17,12 +17,14 @@ import com.jme3.scene.control.Control;
 public class BuildingControl extends AbstractControl {    
     private float speed = 1.0f;    
     
+    
+    //Moves the spatial, and set a flag to delete it,
+    //if it gets behind the camera
     @Override
     protected void controlUpdate(float tpf) {
         if(spatial != null){
-           spatial.move(-speed*tpf, 0, 0);                                      
-
-            if(spatial.getLocalTranslation().x < -10){
+           spatial.move(-speed*tpf, 0, 0);    
+            if(spatial.getLocalTranslation().x < -12){
                 spatial.setUserData("isAlive", false);
             }
         }

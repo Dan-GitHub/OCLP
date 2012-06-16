@@ -22,6 +22,10 @@ public class Main extends SimpleApplication {
             
         //set up buildings
         buildings = new Buildings(assetManager, rootNode);
+        
+        //Add the main player(Bird)
+        flyCam.setEnabled(false);
+        Bird bird = new Bird(assetManager,rootNode,cam,inputManager);
     }
 
     @Override
