@@ -6,10 +6,11 @@ import com.jme3.app.SimpleApplication;
 public class Main extends SimpleApplication {
     
     Buildings buildings;
+    public static Main app;
     
     public static void main(String[] args) {
-        Main app = new Main();
-        app.start();
+        app = new Main();
+        app.start();        
     }
 
     @Override
@@ -26,12 +27,15 @@ public class Main extends SimpleApplication {
         //Add the main player(Bird)
         flyCam.setEnabled(false);
         Bird bird = new Bird(assetManager,rootNode,cam,inputManager);
+        buildings.startTimer();
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         buildings.checkOutOfBounds();
     }
+    
+    
     
     
     
