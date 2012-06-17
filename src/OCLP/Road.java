@@ -18,9 +18,6 @@ public class Road{
         geometry_ground.setMaterial(assetManager.loadMaterial("Materials/Road.j3m"));
         
         rootNode.attachChild(geometry_ground);
-    }
-    
-    public void tickPosition(){
-        geometry_ground.move(-0.008f, 0, 0);
-    }
+    }    
+ 
 }
