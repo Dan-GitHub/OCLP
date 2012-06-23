@@ -1,6 +1,6 @@
 package OCLP;
 
-import OCLP.Controls.BuildingControl;
+import OCLP.Controls.MoveControl;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.Node;
@@ -54,7 +54,7 @@ public class Buildings implements ActionListener {
         //Spawn buildings
         Spatial geometry_building = createBuilding();
         geometry_building.setUserData("isAlive", true);
-        geometry_building.addControl(new BuildingControl());
+        geometry_building.addControl(new MoveControl());
         
         buildings.attachChild(geometry_building);
         
@@ -93,7 +93,7 @@ public class Buildings implements ActionListener {
                  //Spawn buildings
                 Spatial geometry_building = createBuilding();
                 geometry_building.setUserData("isAlive", true);
-                geometry_building.addControl(new BuildingControl());
+                geometry_building.addControl(new MoveControl());
 
                 buildings.attachChild(geometry_building);
                 return null;

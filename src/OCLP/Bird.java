@@ -7,17 +7,16 @@ package OCLP;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
+import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl.ControlDirection;
-import com.jme3.scene.shape.Box;
 
 /**
  *
@@ -28,20 +27,20 @@ public class Bird implements AnalogListener{
     InputManager inputManager;    
     Node bird = new Node();
     private float speed = 1.0f;
+    private int rot = 0;
+    private CameraNode camNode;
     
     public Bird(AssetManager assetManager, Node rootNode, Camera cam, InputManager inputManager){
         this.inputManager = inputManager;    
    
-        Box b = new Box(Vector3f.ZERO, 0.2f, 0.2f, 0.2f); // create cube shape at the origin
-        Geometry geom = new Geometry("Box", b);  // create cube geometry from the shape
-        Material mat = new Material(assetManager,
-          "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
-        mat.setColor("Color", ColorRGBA.Blue);   // set color of material to blue
-        geom.setMaterial(mat);                   // set the cube's material
-        bird.attachChild(geom);
+        
+        //Load up & attach our bird
+        Spatial birdModel = assetManager.loadModel("Models/bird.j3o");
+        rootNode.attachChild(birdModel);
+        birdModel.setLocalScale(0.3f, 0.3f, 0.3f);
+        bird.attachChild(birdModel);
         bird.move(0, 1, 0);
-        
-        
+
         
         //Setup input
         setUpKeys();
@@ -49,7 +48,7 @@ public class Bird implements AnalogListener{
         //Setup the Camera
         // Disable the default flyby cam
         //create the camera Node
-        CameraNode camNode = new CameraNode("Camera Node", cam);
+        camNode = new CameraNode("Camera Node", cam);
         //This mode means that camera copies the movements of the target:
         camNode.setControlDir(ControlDirection.SpatialToCamera);
         //Attach the camNode to the target:
@@ -66,7 +65,11 @@ public class Bird implements AnalogListener{
     private void setUpKeys(){
         inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_D));
+        inputManager.addMapping("rotateUp", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+        inputManager.addMapping("rotateDown", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
         inputManager.addListener(this, new String[]{"Left", "Right"});
+        inputManager.addListener(this, "rotateUp", "rotateDown");
+
     }
 
     public void onAnalog(String name, float value, float tpf) {
@@ -79,6 +82,17 @@ public class Bird implements AnalogListener{
                 bird.move(0, 0, speed*tpf);
             }              
         }
+        
+        if (name.equals("rotateUp") && rot!=5) {
+      rot+=1;
+      bird.rotate(0, 0, 2 * tpf);
     }
+      if (name.equals("rotateDown")&& rot!=-5) {
+      rot+=-1;
+      bird.rotate(0, 0, -2 * tpf);
+    }
+      System.out.println(rot);
     
+}
+
 }

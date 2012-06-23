@@ -1,11 +1,13 @@
 package OCLP;
 
+import OCLP.Controls.MoveControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.asset.*;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 
 public class Road{
@@ -16,8 +18,9 @@ public class Road{
         ground.scaleTextureCoordinates(new Vector2f(1f,33f));
         geometry_ground = new Geometry("Road", ground);
         geometry_ground.setMaterial(assetManager.loadMaterial("Materials/Road.j3m"));
-        
-        rootNode.attachChild(geometry_ground);
+        Spatial S_geometry_ground = geometry_ground;
+        S_geometry_ground.addControl(new MoveControl());
+        rootNode.attachChild(S_geometry_ground);
     }    
  
 }
