@@ -14,8 +14,8 @@ public class Road{
     Geometry geometry_ground;
     
     protected Road(AssetManager assetManager,Node rootNode){
-        Box ground = new Box(Vector3f.ZERO, 100, 0.1f, 3);
-        ground.scaleTextureCoordinates(new Vector2f(1f,33f));
+        Box ground = new Box(Vector3f.ZERO, 10000, 0.1f, 3);
+        ground.scaleTextureCoordinates(new Vector2f(1f,3300f));
         geometry_ground = new Geometry("Road", ground);
         geometry_ground.setMaterial(assetManager.loadMaterial("Materials/Road.j3m"));
         Spatial S_geometry_ground = geometry_ground;
